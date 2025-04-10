@@ -1,1 +1,23 @@
+--1.Define and explain the purpose of BULK INSERT in SQL Server.
+--bulk insert is used to quickly load large volumes of data from a file (e.g., .txt, .csv) into a SQL Server table. It's faster than row-by-row inserts.
 
+--2.List four file formats that can be imported into SQL Server.
+--.csv, .txt, .xml, xls( or xlsx)
+--3. Create Products table
+create table Products (ProductID int primary key, ProductName varchar(50), Price decimal (10,2))
+
+--4. Insert three records into the Products table using INSERT INTO.
+insert into Products values (1, 'Bread', 10), (2, 'Shampoo', 25), (3, 'Phone', 500)
+
+--5. Explain the difference between NULL and NOT NULL with examples.
+-- Example of allowing NULL
+CREATE TABLE Example1 (
+    ID INT,
+    Description VARCHAR(100) NULL
+);
+
+-- Example of NOT NULL
+CREATE TABLE Example2 (
+    ID INT,
+    Description VARCHAR(100) NOT NULL
+);
