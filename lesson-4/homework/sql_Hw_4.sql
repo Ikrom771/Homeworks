@@ -36,3 +36,60 @@ Select Price
 from Products
 where Price between 50 and 100
 
+--9.Use SELECT DISTINCT on two columns (Category and ProductName) in the Products table
+Select Distinct Category, ProductName
+from Products
+
+--10. After SELECT DISTINCT on two columns (Category and ProductName), order the results by ProductName in descending order
+Select Distinct Category, ProductName
+from Products
+order by ProductName desc
+
+--11. Select the top 10 products from the Products table, ordered by Price DESC
+Select top 10 *
+From Products
+Order by Price desc
+
+--12. Use COALESCE to return the first non-NULL value from FirstName or LastName in the Employees table
+Select coalesce( FirstName, LastName) as Name
+From Employees
+
+--13.Select distinct Category and Price from the Products table
+Select Category, Price
+from Products
+
+
+
+--14.Filter the Employees table to show employees whose Age is either between 30 and 40 or Department = 'Marketing'
+Select *
+from Employees
+where (Age between 30 and 40) or DepartmentName = 'Marketing'
+
+--15.Use OFFSET-FETCH to select rows 11 to 20 from the Employees table, ordered by Salary DESC
+Select *
+From Employees 
+order by Salary desc 
+offset 10 rows  fetch next 20 rows only
+
+--16.Display all products with Price <= 1000 and Stock > 50, sorted by Stock in ascending order
+Select *
+From Products 
+where Price<=1000 and StockQuantity>50
+Order by StockQuantity asc
+
+--17.Filter the Products table for ProductName values containing the letter 'e' using LIKE
+Select *
+from Products
+Where ProductName like '%e%'
+
+--18. Use IN operator to filter for employees who work in either 'HR', 'IT', or 'Finance'
+Select *
+from Employees;
+Where DepartmentName In( 'Hr', 'IT', "Finance")
+
+--19.Order the customers by City in ascending and PostalCode in descending order
+Select * 
+from Customers
+order by City asc , PostalCode desc
+
+
