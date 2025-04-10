@@ -47,17 +47,55 @@ ADD CONSTRAINT FK_Products_Categories
 FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID);
 
 --12. Explain the differences between PRIMARY KEY and UNIQUE KEY with examples.
-/* PRIMARY KEY :
-Cannot contain NULL.
-Only one per table.
-Enforces uniqueness and NOT NULL.
+-- PRIMARY KEY = unique + not null (only one per table)
+-- UNIQUE = allows one null, can have multiple per table
 
-UNIQUE KEY:
-Can contain NULL (only one NULL per column).
-Multiple UNIQUE keys can exist per table.
-Enforces uniqueness only.
-*/
---13.
+-- 13. CHECK constraint: Price > 0
+ALTER TABLE Products
+ADD CONSTRAINT CHK_Price_Positive CHECK (Price > 0);
+
+--14.Modify the Products table to add a column Stock (INT, NOT NULL).
+ALTER TABLE Products
+ADD Stock INT NOT NULL DEFAULT 0;
+
+--15. Use the ISNULL function to replace NULL values in a column with a default value.
+SELECT ProductID, ProductName, ISNULL(Price, 0) AS Price
+FROM Products;
+
+--16. Describe the purpose and usage of FOREIGN KEY constraints in SQL Server.
+-- Ensures referential integrity between related tables (e.g., Products linked to Categories)
+
+--17. Write a script to create a Customers table with a CHECK constraint ensuring Age >= 18.
+CREATE TABLE Customers (CustomerID INT PRIMARY KEY, CustomerName VARCHAR(100), Age INT CHECK (Age >= 18));
+
+--18. Create a table with an IDENTITY column starting at 100 and incrementing by 10.
+CREATE TABLE InvoiceNumbers (InvoiceID INT IDENTITY(100, 10) PRIMARY KEY, InvoiceDate DATE);
+
+--19. Write a query to create a composite PRIMARY KEY in a new table OrderDetails.
+create table OrderDetails (OrderID INT, ProductID INT, Quantity INT, PRIMARY KEY (OrderID, ProductID));
+
+--20. Explain with examples the use of COALESCE and ISNULL functions for handling NULL values.
+--ISNULL returns the first non-null value, same as COALESCE in simple cases
+SELECT 
+    ProductName,
+    ISNULL(Price, 0) AS Price_ISNULL,
+    COALESCE(Price, 0) AS Price_COALESCE
+FROM Products;
+
+--21.Create a table Employees with both PRIMARY KEY on EmpID and UNIQUE KEY on Email.
+
+Create table Employees     EmpID INT PRIMARY KEY,
+    FullName VARCHAR(100),
+    Email VARCHAR(100) UNIQUE.
+
+--22. Write a query to create a FOREIGN KEY with ON DELETE CASCADE and ON UPDATE CASCADE options.
+CREATE TABLE Orders (OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    FOREIGN KEY (CustomerID)
+    REFERENCES Customers(CustomerID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
 
 
 
