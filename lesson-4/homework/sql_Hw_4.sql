@@ -133,4 +133,8 @@ Select Salary from Employees
 where DepartmentName= 'Sales'
   )
 
---
+--27.Write a query that filters the Orders table for orders placed in the last 180 days using BETWEEN and CURRENT_DATE. (Search how to get the current date)
+SELECT *
+FROM Orders
+WHERE OrderDate BETWEEN DATEADD(day, -180, GETDATE()) AND GETDATE();
+
