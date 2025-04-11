@@ -92,4 +92,45 @@ Select *
 from Customers
 order by City asc , PostalCode desc
 
+--20.Write a query that selects the top 10 products with the highest sales, using TOP(10) and ordered by SalesAmount DESC.
+Select top 10 *
+from Sales
+order by SaleAmount desc
 
+--21.Combine FirstName and LastName into one column named FullName in the Employees table. (only in select statement)
+Select isnull(FirstName, '') + ' ' + isnull(LastName, '') as FullName
+FROM Employees
+
+--22.Write a query to select the distinct Category, ProductName, 
+--and Price for products that are priced above $50, using DISTINCT on three columns.
+Select  distinct Category, ProductName, Price
+from Products 
+where Price>50
+
+--23.Write a query that selects products whose Price is less than 10% of the average price in the Products table. 
+--(Do some research on how to find average price of all products)
+Select *
+from Products
+Where Price <  0.1*(Select avg(Price) from Products)
+
+--24.Use WHERE clause to filter for employees 
+--whose Age is less than 30 and who work in either the 'HR' or 'IT' department.
+Select *
+from Employees
+where Age<30 and DepartmentName in ('HR', 'IT')
+
+--25.Use LIKE with wildcard to select all customers whose Email contains the domain '@gmail.com'.
+Select *
+from Customers
+where Email like '%@gmail.com'
+
+--26.Write a query that uses the ALL operator to find employees whose 
+--salary is greater than all employees in the 'Sales' department.
+Select *
+from Employees
+where Salary > all (
+Select Salary from Employees
+where DepartmentName= 'Sales'
+  )
+
+--
