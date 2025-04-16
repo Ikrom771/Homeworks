@@ -13,9 +13,9 @@ union
 Select ProductName from Products_Discounted
 
 --4.Write a query to find the intersection of Products and Products_Discounted tables using INTERSECT.
-Select* from Products
+Select ProductID from Products
 intersect
-Select*  from Products_Discounted
+Selec ProductID  from Products_Discounted
 
 --5.Write a query to select distinct customer names and their corresponding Country using SELECT DISTINCT.
 Select distinct FirstName, LastName, Country
@@ -25,11 +25,10 @@ from Customers
 --displays 'High' if Price > 1000, and 'Low' if Price <= 1000 from Products table.
 Select Price , ProductName,
 Case
-	when Price>1000 then  'High'
-	else 'Low'
-
-	end as Price_category
-	From Products
+when Price<=1000 then  'Low'
+else 'High'
+end as Price_category
+From Products
 
 
 --7.Use IIF to create a column that shows 'Yes' if Stock > 100, and 
@@ -49,22 +48,22 @@ Select ProductName
 From OutofStock
 
 --9.Write a query that returns the difference between the Products and Products_Discounted tables using EXCEPT.
-Select *  
-From Products
-Except
-Select*
-From Products
+SELECT ProductName
+FROM Products
+EXCEPT
+SELECT ProductName
+FROM Products_Discounted;
 
 --10.Create a conditional column using IIF that shows 
 --'Expensive' if the Price is greater than 1000, and 'Affordable' if less, from Products table.
 Select  Price, ProductName,
 
-IIF( Price < 1000, 'affordable', 'Expensive') as Price_Category
+IIF( Price <= 1000, 'affordable', 'Expensive') as Price_Category
 
 From Products
 
 --11.Write a query to find employees in the Employees table who have either Age < 25 or Salary > 60000.
-Select*, 
+Select FirstName,LastName , Age , Salary
 from Employees
 
 where age<25 or Salary>60000
