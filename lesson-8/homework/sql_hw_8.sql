@@ -94,3 +94,51 @@ Order by City asc
 Select  ProductID, SUM(SaleAmount) as Total_sales
 from Sales
 Group by ProductID
+
+
+--17.Using Products table, use wildcard to find products that contain 'oo' in the name. Return productname.
+Select ProductName
+From Products
+Where ProductName LIKE '%oo%'
+
+--18.Using Products and Products_Discounted tables, compare product IDs using INTERSECT.
+Select ProductID
+From Products
+
+Intersect
+Select ProductID
+From Products_Discounted
+
+--19.Using Invoices table, show top 3 customers with the highest total invoice amount. Return CustomerID and Totalspent.
+Select Top 3 CustomerID, SUM(TotalAmount) AS TotalSpent
+From Invoices
+Group by CustomerID
+Order by TotalSpent desc
+
+
+--20.Find product ID and productname that are present in Products but not in Products_Discounted.
+Select ProductID, ProductName
+From Products
+
+Except
+
+Select ProductID, ProductName
+From Products_Discounted 
+
+--21.Using Products and Sales tables, list product names and the number of times each has been sold. (Research for Joins)
+SELECT 
+    p.ProductName,
+    COUNT(s.SaleID) AS TimesSold
+FROM Products p
+JOIN Sales s
+    ON p.ProductID = s.ProductID
+GROUP BY p.ProductName
+ORDER BY TimesSold DESC;
+
+--22.Using Orders table, find top 5 products (by ProductID) with the highest order quantities.
+SELECT TOP 5 
+    ProductID, 
+    SUM(Quantity) AS TotalQuantity
+FROM Orders
+GROUP BY ProductID
+ORDER BY TotalQuantity DESC
