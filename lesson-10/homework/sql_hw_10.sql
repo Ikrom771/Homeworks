@@ -163,3 +163,58 @@ Where Categories.CategoryID is Null
 
 --22.Using the Employees table, write a query to find employees who report to the same manager and earn more than 60000.
 --Expected Output: Employee1, Employee2, ManagerID, Salary
+Select E1.Name as Employee1 ,
+		E2.Name as Employee2,
+		 E1.ManagerID,
+    E1.Salary
+From Employees E1
+Join Employees E2 on E1.ManagerID=E2.ManagerID
+And E1.EmployeeID<E2.EmployeeID
+And E1.Salary>60000	
+And E2.Salary>60000	
+--23.Using the Employees and Departments tables, write a query to return employees who work in departments whose name starts with the letter 'M'.
+--Expected Output: EmployeeName, DepartmentName
+Select
+	Employees.Name, Departments.DepartmentName
+From	Employees
+Join Departments on Departments.DepartmentID=Employees.DepartmentID
+Where Departments.DepartmentName Like 'M%'
+
+
+--24Using the Products and Sales tables, write a query to list sales where the amount is greater than 500, including product names.
+--Expected Output: SaleID, ProductName, SaleAmount
+Select
+	Sales.SaleID, Products.ProductName, Sales.SaleAmount
+	From Sales
+Join Products on Products.ProductID=Sales.ProductID
+Where Sales.SaleAmount>500
+
+
+--25.Using the Students, Courses, and Enrollments tables, write a query to find students who have not enrolled in the course 'Math 101'.
+--Expected Output: StudentID, StudentName
+Select
+Students.StudentID, Students.Name
+From Students
+ left Join  Enrollments  on Enrollments.StudentID=Students.StudentID
+ left Join Courses on Courses.CourseID= Enrollments.CourseID
+ and Courses.CourseName= 'Math101'
+ Where Courses.CourseID is null
+
+
+--26.Using the Orders and Payments tables, write a query to return orders that are missing payment details.
+--Expected Output: OrderID, OrderDate, PaymentID
+Select
+	Orders.OrderID, Orders.OrderDate, Payments.PaymentID
+From Orders
+Left Join	Payments on Payments.OrderID=Orders.OrderID
+Where Payments.PaymentID is null
+
+
+--27.Using the Products and Categories tables, write a query to list products that belong to either the 'Electronics' or 'Furniture' category.
+-- Expected Output: ProductID, ProductName, CategoryName
+Select 
+Products.ProductID, Products.ProductName, Categories.CategoryName
+From Products
+Join	Categories on Categories.CategoryID=Products.Category
+Where Categories.CategoryName= 'Electronics' Or Categories.CategoryName= 'Furniture'
+
