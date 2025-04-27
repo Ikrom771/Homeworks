@@ -176,3 +176,108 @@ From
 Join Departments on Departments.DepartmentID= Employees.DepartmentID
 Where Departments.DepartmentName= 'Sales' 
 Or Year(Employees.HireDate)> 2020
+
+
+--Hard-Level Tasks (7)
+/* 14.Return: CustomerName, OrderID, Address, OrderDate
+Task: List all orders made by customers in the USA whose address starts with 4 digits.
+Tables Used: Customers, Orders*/
+Select
+	Customers.FirstName +' '+Customers.LastName as FullName,
+	Orders.OrderID,
+	Customers.Address,
+	Orders.OrderDate
+From
+	Customers
+Join Orders on Orders.CustomerID= Customers.CustomerID
+Where Customers.Country ='USA' 
+and Customers.Address like '[0-9]%' 
+and LEN(Address)>=4
+
+
+/* 15.Return: ProductName, Category, SaleAmount
+Task: Display product sales for items in the Electronics category or where the sale amount exceeded 350.
+Tables Used: Products, Sales */
+Select
+	Products.ProductName,
+	Categories.CategoryName,
+	Sales.SaleAmount
+From
+	Products
+Join Categories on Categories.CategoryID=Products.Category
+Join Sales on Sales.ProductID = Products.ProductID
+Where Categories.CategoryName= 'Electronics'
+and Sales.SaleAmount>350
+
+
+/* 16.Return: CategoryName, ProductCount
+Task: Show the number of products available in each category.
+Tables Used: Products (as a derived table), Categories */
+Select 
+	Categories.CategoryName,
+	Products.ProductCount
+From
+	Categories
+Cross apply(
+	Select 
+		Count(Products.ProductID) as ProductCount
+	From Products
+	Where  Products.Category= Categories.CategoryID
+) Products
+
+
+/* 17.Return: CustomerName, City, OrderID, Amount
+Task: List orders where the customer is from Los Angeles and the order amount is greater than 300.
+Tables Used: Customers, Orders  */
+Select
+	Customers.FirstName +' '+Customers.LastName as FullName,
+	Customers.City,
+	Orders.OrderID,
+	Orders.TotalAmount
+From Customers
+Join Orders on Orders.CustomerID=Customers.CustomerID
+And Customers.City= 'Los Angeles'
+And Orders.TotalAmount>300
+
+/* 18.Return: EmployeeName, DepartmentName
+Task: Display employees who are in the HR or Finance department, or whose name contains at least 4 vowels.
+Tables Used: Employees, Departments*/
+SELECT 
+    Employees.Name AS EmployeeName, 
+    Departments.DepartmentName
+FROM 
+    Employees
+JOIN 
+    Departments ON Employees.DepartmentID = Departments.DepartmentID
+WHERE 
+    Departments.DepartmentName IN ('HR', 'Finance') 
+    OR LEN(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(Employees.Name, 'a', ''), 'e', ''), 'i', ''), 'o', ''), 'u', '')) <= LEN(Employees.Name) - 4;
+
+/*19.Return: ProductName, QuantitySold, Price
+Task: List products that had a sales quantity above 100 and a price above 500.
+Tables Used: Sales, Products */
+Select 
+	Products.ProductName,
+	Products.Price,
+	Sum(Sales.SaleAmount) as QuantitySold
+From 
+	Products
+Join Sales on Sales.ProductID=Products.ProductID
+
+group by Products.ProductName , Products.Price
+Having Sum(Sales.SaleAmount)>100 and Products.Price>500
+Order by QuantitySold desc
+
+/* 20.Return: EmployeeName, DepartmentName, Salary
+Task: Show employees who are in the Sales or Marketing department and have a salary above 60000.
+Tables Used: Employees, Departments*/
+Select
+	Employees.Name, 
+	Departments.DepartmentName,
+	Employees.Salary
+From 
+	Employees 
+Join Departments on Departments.DepartmentID=Employees.DepartmentID
+Where Departments.DepartmentName in ('Sales', 'Marketing')
+And Employees.Salary>60000
+
